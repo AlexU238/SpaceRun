@@ -32,7 +32,7 @@ public final class Space {
         return new Space();
     }
 
-     Group generateStars(){
+     private Group generateStars(){
         Group stars=new Group();
         int x=0;
         int y=0;
