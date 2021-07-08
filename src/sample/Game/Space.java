@@ -22,7 +22,7 @@ public final class Space {
         this.background = new Rectangle();
         this.background.setY(0);
         this.background.setX(-100);
-        this.background.setWidth(1080);
+        this.background.setWidth(1180);
         this.background.setHeight(720);
         this.background.setFill(Color.BLACK);
         TextureLoader.loadMainThreeTextures();
@@ -62,12 +62,18 @@ public final class Space {
 
     }
 
+
+
     public Group getStars() {
         return generateStars();
     }
 
     public LinkedList<Rock> getRockLinkedList() {
         return rockLinkedList;
+    }
+
+    public LinkedList<Star> getStarLinkedList() {
+        return starLinkedList;
     }
 
     public void setPlayer(Ship player) {
@@ -84,5 +90,11 @@ public final class Space {
 
     public Rectangle getBackground() {
         return background;
+    }
+
+    public void move(){
+         for(Star s:starLinkedList){
+             s.move();
+         }
     }
 }

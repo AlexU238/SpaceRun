@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -12,13 +13,21 @@ import java.awt.*;
 
 
 public class Main extends Application {
+    Space space = Space.connectToSpace();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Space space = Space.connectToSpace();
         Group groupMain = new Group();
         groupMain.getChildren().addAll(space.getBackground(),space.getStars());
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                space.move();
+            }
+        };
+        animationTimer.start();
+
         primaryStage.setTitle("Space run");
         primaryStage.setScene(new Scene(groupMain, 1080, 720));
         primaryStage.resizableProperty().setValue(false);
