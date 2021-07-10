@@ -1,8 +1,8 @@
 package sample.Game;
 
 import javafx.scene.image.Image;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+import java.io.InputStream;
 
 final class TextureLoader { //need get the file location to be automatic
     private static Image star;
@@ -13,47 +13,48 @@ final class TextureLoader { //need get the file location to be automatic
     private TextureLoader() {
     }
 
-    static void loadMainThreeTextures(){
+    static void loadMainThreeTextures() {
         try {
-            FileInputStream imageInputNoTexture=new FileInputStream("C:\\Users\\User\\IdeaProjects\\SpaceRun\\src\\sample\\Game\\no_texture.png");
-            NO_TEXTURE=new Image(imageInputNoTexture);
-        }catch (FileNotFoundException ex){
+            InputStream imageInputNoTexture = TextureLoader.class.getResourceAsStream(TextureConstants.DEFAULT.getFileName());
+            NO_TEXTURE = new Image(imageInputNoTexture);
+        } catch (NullPointerException ex) {
             System.out.println("NO_TEXTURE file not not found");
             //return to menu??
         }
-        try{
-            FileInputStream imageInputStarTexture=new FileInputStream("C:\\Users\\User\\IdeaProjects\\SpaceRun\\src\\sample\\Game\\StarTextures.png");
-            star=new Image(imageInputStarTexture);
-        }catch(FileNotFoundException ex){
+        try {
+            //FileInputStream imageInputStarTexture=new FileInputStream("C:\\Users\\User\\IdeaProjects\\SpaceRun\\src\\sample\\Game\\StarTextures.png");
+            InputStream imageInputStarTexture = TextureLoader.class.getResourceAsStream(TextureConstants.STAR_TEXTURES.getFileName());
+            star = new Image(imageInputStarTexture);
+        } catch (NullPointerException e) {
             System.out.println("Star texture file NOT FOUND");
-            star=NO_TEXTURE;
+            star = NO_TEXTURE;
         }
-        try{
-            FileInputStream imageInputRockTexture=new FileInputStream("C:\\Users\\User\\IdeaProjects\\SpaceRun\\src\\sample\\Game\\RockTextures.png");
-            rock=new Image(imageInputRockTexture);
-        }catch (FileNotFoundException ex){
+        try {
+            InputStream imageInputRockTexture = TextureLoader.class.getResourceAsStream(TextureConstants.ROCK_TEXTURES.getFileName());
+            rock = new Image(imageInputRockTexture);
+        } catch (NullPointerException ex) {
             System.out.println("Rock texture file NOT FOUND");
-            rock=NO_TEXTURE;
+            rock = NO_TEXTURE;
         }
-        try{
-            FileInputStream imageInputShipTexture=new FileInputStream("SHIP.png");
-            ship=new Image(imageInputShipTexture);
-        }catch (FileNotFoundException ex){
+        try {
+            InputStream imageInputShipTexture = TextureLoader.class.getResourceAsStream(TextureConstants.SHIP_TEXTURES.getFileName());
+            ship = new Image(imageInputShipTexture);
+        } catch (NullPointerException ex) {
             System.out.println("Ship texture file NOT FOUND");
-            ship=NO_TEXTURE;
+            ship = NO_TEXTURE;
         }
 
     }
 
-     static Image getStar() {
+    static Image getStar() {
         return star;
     }
 
-     static Image getRock() {
+    static Image getRock() {
         return rock;
     }
 
-     static Image getShip() {
+    static Image getShip() {
         return ship;
     }
 }

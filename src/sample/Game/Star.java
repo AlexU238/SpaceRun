@@ -6,7 +6,7 @@ class Star extends SpaceObject {
 
     static private int starID;
 
-     Star(int x, int y, ImageView texture) {
+    Star(int x, int y, ImageView texture) {
         super(x, y, texture);
         starID++;
     }
@@ -14,15 +14,15 @@ class Star extends SpaceObject {
 
     @Override
     void move() {
-        if (this.getTexture().getX()>-100){
-            this.getTexture().setX(this.getTexture().getX()-1);
-        }else {
+        if (this.getTexture().getX() > -100) {
+            this.getTexture().setX(this.getTexture().getX() - 1);
+        } else {
             reset();
         }
 
     }
 
-    private void reset(){
+    private void reset() {
         this.getTexture().setX(1080);
     }
 

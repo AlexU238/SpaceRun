@@ -2,15 +2,15 @@ package sample.Game;
 
 class ShipControls {
 
-    void keyPressed(){
+    void keyPressed() {
 
     }
 
-    void moveUp(){
+    void moveUp() {
 
     }
 
-    void moveDown(){
+    void moveDown() {
 
     }
 }

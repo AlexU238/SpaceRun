@@ -1,28 +1,26 @@
 package sample.Game;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 class SpaceShip extends SpaceObject implements Ship {
-     private String name;
-     private ShipControls shipControls;
-     private int collisionPoint1;
-     private int collisionPoint2;
-     private int collisionPoint3;
+    private String name;
+    private ShipControls shipControls;
+    private int collisionPoint1;
+    private int collisionPoint2;
+    private int collisionPoint3;
 
-     SpaceShip(int x, int y, String name, ImageView texture) {
-         super(x, y, texture);
-        this.name=name;
-        this.shipControls=new ShipControls();
+    SpaceShip(int x, int y, String name, ImageView texture) {
+        super(x, y, texture);
+        this.name = name;
+        this.shipControls = new ShipControls();
     }
-
 
     @Override
     void move() {
 
     }
 
-    void crash(){
+    void crash() {
 
     }
 
