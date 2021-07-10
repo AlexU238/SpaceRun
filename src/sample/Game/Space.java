@@ -1,6 +1,6 @@
 package sample.Game;
 
-import java.util.LinkedList;
+import java.util.*;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -13,8 +13,10 @@ public final class Space {
     private LinkedList<Star>starLinkedList;
     private LinkedList<Rock>rockLinkedList;
     private Ship player;
-    private int score;
+    private float difficulty;
     private Rectangle background;
+    private static final int NUMBER_OF_ROCKS=10;//initially it was 20, but it was unreal to beat, so it was changed to 10
+    private static final int NUMBER_OF_STARS=11;
 
      private Space( ) {
         this.starLinkedList = new LinkedList<>();
@@ -36,7 +38,7 @@ public final class Space {
         Group stars=new Group();
         int x=0;
         int y=0;
-        for(int i=0; i<=11; i++){
+        for(int i=0; i<=NUMBER_OF_STARS; i++){
             starLinkedList.add(new Star(x,y,new ImageView(TextureLoader.getStar())));
             x+=100;
         }
@@ -46,15 +48,20 @@ public final class Space {
         return stars;
     }
 
-    void generateRocks(){
-
+    private Group generateRocks(){
+        Group rocks=new Group();
+        Random rnd = new Random();
+        int x=1140;
+        for(int i=0;i<=NUMBER_OF_ROCKS;i++){
+            rockLinkedList.add(new Rock(x,rnd.nextInt(720),new ImageView(TextureLoader.getRock())));
+        }
+        for (Rock r:rockLinkedList){
+            rocks.getChildren().addAll(r.getHitbox(),r.getTexture());
+        }
+        return rocks;
     }
 
     void checkReset(){
-
-    }
-
-    void countScore(){
 
     }
 
@@ -62,10 +69,37 @@ public final class Space {
 
     }
 
+    public void adjustDifficulty(){
+        difficulty+=0.0015;
+        if((int)difficulty>=20){
+            difficulty=20;
+        }
+    }
 
+    public void moveBackGround(){
+         for(Star s:starLinkedList){
+            s.move();
+         }
+    }
+
+    public void moveRocks(){
+        for (int i=0;i<=difficulty-1;i++){
+            launchRocks(i);
+        }
+    }
+
+    private void launchRocks(int starter){
+        for(int i=0; i<=starter;i++){
+                rockLinkedList.get(i).move();
+            }
+    }
 
     public Group getStars() {
         return generateStars();
+    }
+
+    public Group getRocks(){
+        return generateRocks();
     }
 
     public LinkedList<Rock> getRockLinkedList() {
@@ -84,17 +118,13 @@ public final class Space {
         return player;
     }
 
-    public int getScore() {
-        return score;
+    public float getDifficulty() {
+        return difficulty;
     }
 
     public Rectangle getBackground() {
         return background;
     }
 
-    public void move(){
-         for(Star s:starLinkedList){
-             s.move();
-         }
-    }
 }
+

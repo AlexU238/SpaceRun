@@ -13,20 +13,24 @@ import java.awt.*;
 
 
 public class Main extends Application {
-    Space space = Space.connectToSpace();
+    private static Space space = Space.connectToSpace();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Group groupMain = new Group();
-        groupMain.getChildren().addAll(space.getBackground(),space.getStars());
+        groupMain.getChildren().addAll(space.getBackground(),space.getStars(),space.getRocks());
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                space.move();
+                space.moveBackGround();
+                space.moveRocks();
+                space.adjustDifficulty();
             }
         };
         animationTimer.start();
+
+
 
         primaryStage.setTitle("Space run");
         primaryStage.setScene(new Scene(groupMain, 1080, 720));
@@ -41,6 +45,7 @@ public class Main extends Application {
 
 
     System.out.println(MouseInfo.getPointerInfo().getLocation().toString());
+        System.out.println(space.getDifficulty());
 
     }
 }

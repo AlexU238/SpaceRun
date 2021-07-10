@@ -1,7 +1,5 @@
 package sample.Game;
 
-
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 class Star extends SpaceObject {
