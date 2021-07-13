@@ -1,77 +1,171 @@
 package sample.Game;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 
 class SpaceShip extends SpaceObject implements Ship {
-    private String name;
-    private ShipControls shipControls;
-    private int collisionPoint1;
-    private int collisionPoint2;
-    private int collisionPoint3;
+    //private String name;
+    private Polygon triangleHitbox = new Polygon();
+    private double triangleHitboxTopPointX = 100;
+    private double triangleHitboxTopPointY = 331;
+    private double triangleHitboxBottomPointX = 100;
+    private double triangleHitboxBottomPointY = 390;
+    private double triangleHitboxMiddleRightPointX = 150;
+    private double triangleHitboxMiddleRightPointY = 361;
+    private static double DEFAULT_SPEED_CONSTANT = 10;
+    private double speedDirectionUp = DEFAULT_SPEED_CONSTANT;
+    private double speedDirectionDown = DEFAULT_SPEED_CONSTANT;
 
-    SpaceShip(int x, int y, String name, ImageView texture) {
+    SpaceShip(int x, int y, ImageView texture) {
         super(x, y, texture);
-        this.name = name;
-        this.shipControls = new ShipControls();
+        //this.name = name;
+        this.triangleHitbox.getPoints().addAll(
+                triangleHitboxTopPointX, triangleHitboxTopPointY,
+                triangleHitboxBottomPointX, triangleHitboxBottomPointY,
+                triangleHitboxMiddleRightPointX, triangleHitboxMiddleRightPointY
+        );
+        this.triangleHitbox.setFill(Color.RED);
+        this.getTexture().setX(triangleHitboxTopPointX-30);
+        this.getTexture().setY(triangleHitboxTopPointY);
     }
+
 
     @Override
-    void move() {
+    void move() { //I did not know what to do with this method, because I used a different movement mechanic and did not expect that I wont be able to incorporate it in this method. Oops
 
     }
 
-    void crash() {
+    private void moveUp() {
+        double newTriangleHitboxTopPointY = this.getTriangleHitbox().getPoints().get(1) - speedDirectionUp;
+        double newTriangleHitboxBottomPointY = this.getTriangleHitbox().getPoints().get(3) - speedDirectionUp;
+        double newTriangleHitboxMiddleRightPointY = this.getTriangleHitbox().getPoints().get(5) - speedDirectionUp;
+        this.getTriangleHitbox().getPoints().setAll(
+                triangleHitboxTopPointX, newTriangleHitboxTopPointY,
+                triangleHitboxBottomPointX, newTriangleHitboxBottomPointY,
+                triangleHitboxMiddleRightPointX, newTriangleHitboxMiddleRightPointY
+        );
+        this.getTexture().setY(this.getTexture().getY() - speedDirectionUp);
+
+        if (this.getTriangleHitbox().getPoints().get(1) == 1) {
+            speedDirectionUp = 0;
+        } else returnToDefaultSpeed();
 
     }
 
-    public String getName() {
-        return name;
+    private void moveDown() {
+        double newTriangleHitboxTopPointY = this.getTriangleHitbox().getPoints().get(1) + speedDirectionDown;
+        double newTriangleHitboxBottomPointY = this.getTriangleHitbox().getPoints().get(3) + speedDirectionDown;
+        double newTriangleHitboxMiddleRightPointY = this.getTriangleHitbox().getPoints().get(5) + speedDirectionDown;
+        this.getTriangleHitbox().getPoints().setAll(
+                getTriangleHitboxTopPointX(), newTriangleHitboxTopPointY,
+                getTriangleHitboxBottomPointX(), newTriangleHitboxBottomPointY,
+                getTriangleHitboxMiddleRightPointX(), newTriangleHitboxMiddleRightPointY
+        );
+        this.getTexture().setY(this.getTexture().getY() + speedDirectionDown);
+
+        if (this.getTriangleHitbox().getPoints().get(3) == 720) {
+            speedDirectionDown = 0;
+        } else returnToDefaultSpeed();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    private void returnToDefaultSpeed() {
+        speedDirectionUp = DEFAULT_SPEED_CONSTANT;
+        speedDirectionDown = DEFAULT_SPEED_CONSTANT;
     }
 
-    public ShipControls getShipControls() {
-        return shipControls;
+    Polygon getTriangleHitbox() {
+        return triangleHitbox;
     }
 
-    public void setShipControls(ShipControls shipControls) {
-        this.shipControls = shipControls;
+    ShipControls giveAccessToShipControls() {
+        return new ShipControls();
     }
 
-    public int getCollisionPoint1() {
-        return collisionPoint1;
+    class ShipControls implements EventHandler<KeyEvent> {
+
+        @Override
+        public void handle(KeyEvent keyEvent) {
+            switch (keyEvent.getCode()) {
+                case W:
+                    moveUp();
+                    break;
+                case UP:
+                    moveUp();
+                    break;
+                case S:
+                    moveDown();
+                    break;
+                case DOWN:
+                    moveDown();
+                    break;
+            }
+        }
     }
 
-    public void setCollisionPoint1(int collisionPoint1) {
-        this.collisionPoint1 = collisionPoint1;
+    @SuppressWarnings("unused")
+    private void setTriangleHitbox(Polygon triangleHitbox) {
+        this.triangleHitbox = triangleHitbox;
     }
 
-    public int getCollisionPoint2() {
-        return collisionPoint2;
+    private double getTriangleHitboxTopPointX() {
+        return triangleHitboxTopPointX;
     }
 
-    public void setCollisionPoint2(int collisionPoint2) {
-        this.collisionPoint2 = collisionPoint2;
+    @SuppressWarnings("unused")
+    private void setTriangleHitboxTopPointX(double triangleHitboxTopPointX) {
+        this.triangleHitboxTopPointX = triangleHitboxTopPointX;
     }
 
-    public int getCollisionPoint3() {
-        return collisionPoint3;
+    @SuppressWarnings("unused")
+    private double getTriangleHitboxTopPointY() {
+        return triangleHitboxTopPointY;
     }
 
-    public void setCollisionPoint3(int collisionPoint3) {
-        this.collisionPoint3 = collisionPoint3;
+    @SuppressWarnings("unused")
+    private void setTriangleHitboxTopPointY(double triangleHitboxTopPointY) {
+        this.triangleHitboxTopPointY = triangleHitboxTopPointY;
     }
 
-    @Override
-    public String toString() {
-        return "SpaceShip{" +
-                "name='" + name + '\'' +
-                ", shipControls=" + shipControls +
-                ", collisionPoint1=" + collisionPoint1 +
-                ", collisionPoint2=" + collisionPoint2 +
-                ", collisionPoint3=" + collisionPoint3 +
-                '}';
+    private double getTriangleHitboxBottomPointX() {
+        return triangleHitboxBottomPointX;
     }
+
+    @SuppressWarnings("unused")
+    private void setTriangleHitboxBottomPointX(double triangleHitboxBottomPointX) {
+        this.triangleHitboxBottomPointX = triangleHitboxBottomPointX;
+    }
+
+    @SuppressWarnings("unused")
+    private double getTriangleHitboxBottomPointY() {
+        return triangleHitboxBottomPointY;
+    }
+
+    @SuppressWarnings("unused")
+    private void setTriangleHitboxBottomPointY(double triangleHitboxBottomPointY) {
+        this.triangleHitboxBottomPointY = triangleHitboxBottomPointY;
+    }
+
+    private double getTriangleHitboxMiddleRightPointX() {
+        return triangleHitboxMiddleRightPointX;
+    }
+
+    @SuppressWarnings("unused")
+    private void setTriangleHitboxMiddleRightPointX(double triangleHitboxMiddleRightPointX) {
+        this.triangleHitboxMiddleRightPointX = triangleHitboxMiddleRightPointX;
+    }
+
+    @SuppressWarnings("unused")
+    private double getTriangleHitboxMiddleRightPointY() {
+        return triangleHitboxMiddleRightPointY;
+    }
+
+    @SuppressWarnings("unused")
+    private void setTriangleHitboxMiddleRightPointY(double triangleHitboxMiddleRightPointY) {
+        this.triangleHitboxMiddleRightPointY = triangleHitboxMiddleRightPointY;
+    }
+
+
 }

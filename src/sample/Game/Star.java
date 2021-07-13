@@ -26,6 +26,7 @@ class Star extends SpaceObject {
         this.getTexture().setX(1080);
     }
 
+    @SuppressWarnings("unused")
     public static int getStarID() {
         return starID;
     }

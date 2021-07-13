@@ -2,8 +2,10 @@ package sample.Game;
 
 import java.util.*;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -12,7 +14,7 @@ public final class Space {
 
     private LinkedList<Star> starLinkedList;
     private LinkedList<Rock> rockLinkedList;
-    private Ship player;
+    private SpaceShip player;
     private float difficulty;
     private Rectangle background;
     private static final int NUMBER_OF_ROCKS = 10;//initially it was 20, but it was unreal to beat, so it was changed to 10
@@ -61,12 +63,16 @@ public final class Space {
         return rocks;
     }
 
-    void checkReset() {
-
+    private Group spawnShip() { // try to make a better version
+        Group ship = new Group();
+        player = new SpaceShip(0, 0, new ImageView(TextureLoader.getShip()));
+        ship.getChildren().addAll(player.getTriangleHitbox(),player.getTexture());
+        return ship;
     }
 
-    void collide() {
 
+    public EventHandler<KeyEvent> startShip() {
+        return player.giveAccessToShipControls();
     }
 
     public void adjustDifficulty() {
@@ -102,20 +108,8 @@ public final class Space {
         return generateRocks();
     }
 
-    public LinkedList<Rock> getRockLinkedList() {
-        return rockLinkedList;
-    }
-
-    public LinkedList<Star> getStarLinkedList() {
-        return starLinkedList;
-    }
-
-    public void setPlayer(Ship player) {
-        this.player = player;
-    }
-
-    public Ship getPlayer() {
-        return player;
+    public Group getShip() {
+        return spawnShip();
     }
 
     public float getDifficulty() {
@@ -125,6 +119,7 @@ public final class Space {
     public Rectangle getBackground() {
         return background;
     }
+
 
 }
 

@@ -44,4 +44,8 @@ class Rock extends SpaceObject {
         return hitbox;
     }
 
+    @SuppressWarnings("unused")
+    public static int getRockID() {
+        return rockID;
+    }
 }

@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group groupMain = new Group();
-        groupMain.getChildren().addAll(space.getBackground(), space.getStars(), space.getRocks());
+        groupMain.getChildren().addAll(space.getBackground(), space.getStars(), space.getRocks(), space.getShip());
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
@@ -29,7 +29,9 @@ public class Main extends Application {
 
 
         primaryStage.setTitle("Space run");
-        primaryStage.setScene(new Scene(groupMain, 1080, 720));
+        Scene mainScene = new Scene(groupMain, 1080, 720);
+        mainScene.setOnKeyPressed(space.startShip());
+        primaryStage.setScene(mainScene);
         primaryStage.resizableProperty().setValue(false);
         primaryStage.show();
 

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 import java.io.InputStream;
 
-final class TextureLoader { //need get the file location to be automatic
+final class TextureLoader {
     private static Image star;
     private static Image rock;
     private static Image ship;
