@@ -9,6 +9,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static javafx.application.Platform.exit;
+
 
 public final class Space {
 
@@ -98,6 +100,21 @@ public final class Space {
         for (int i = 0; i <= starter; i++) {
             rockLinkedList.get(i).move();
         }
+    }
+
+    public void collide(){//add UI exit here
+        for(Rock r:rockLinkedList){
+            if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(0),player.getTriangleHitbox().getPoints().get(1))){
+                exit();
+            }
+            if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(2),player.getTriangleHitbox().getPoints().get(3))){
+                System.out.println("GG");
+            }
+            if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(4),player.getTriangleHitbox().getPoints().get(5))){
+                System.out.println("GG");
+            }
+        }
+
     }
 
     public Group getStars() {

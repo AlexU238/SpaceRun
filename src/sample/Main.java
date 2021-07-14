@@ -23,6 +23,7 @@ public class Main extends Application {
                 space.moveBackGround();
                 space.moveRocks();
                 space.adjustDifficulty();
+                space.collide();
             }
         };
         animationTimer.start();
