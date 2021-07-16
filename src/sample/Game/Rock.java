@@ -7,12 +7,10 @@ import javafx.scene.shape.Circle;
 
 class Rock extends SpaceObject {
 
-    static private int rockID;
     private Circle hitbox = new Circle();
 
     Rock(int x, int y, ImageView texture) {
         super(x, y, texture);
-        rockID++;
         hitbox.setCenterY(y + 20);
         hitbox.setCenterX(x + 20);
         hitbox.setRadius(20);
@@ -44,8 +42,4 @@ class Rock extends SpaceObject {
         return hitbox;
     }
 
-    @SuppressWarnings("unused")
-    public static int getRockID() {
-        return rockID;
-    }
 }

@@ -21,6 +21,7 @@ public final class Space {
     private Rectangle background;
     private static final int NUMBER_OF_ROCKS = 10;//initially it was 20, but it was unreal to beat, so it was changed to 10
     private static final int NUMBER_OF_STARS = 11;
+    private long score=0;
 
     private Space() {
         this.starLinkedList = new LinkedList<>();
@@ -31,7 +32,7 @@ public final class Space {
         this.background.setWidth(1180);
         this.background.setHeight(720);
         this.background.setFill(Color.BLACK);
-        TextureLoader.loadMainThreeTextures();
+        GameTextureLoader.loadMainThreeTextures();
     }
 
     public static Space connectToSpace() {
@@ -43,8 +44,12 @@ public final class Space {
         int x = 0;
         int y = 0;
         for (int i = 0; i <= NUMBER_OF_STARS; i++) {
-            starLinkedList.add(new Star(x, y, new ImageView(TextureLoader.getStar())));
+            starLinkedList.add(new Star(x, y, new ImageView(GameTextureLoader.getStar())));
             x += 100;
+        }
+        for (Star s:starLinkedList){
+            s.getTexture().setFitWidth(102);
+            s.getTexture().setFitHeight(722);
         }
         for (Star s : starLinkedList) {
             stars.getChildren().add(s.getTexture());
@@ -57,7 +62,11 @@ public final class Space {
         Random rnd = new Random();
         int x = 1140;
         for (int i = 0; i <= NUMBER_OF_ROCKS; i++) {
-            rockLinkedList.add(new Rock(x, rnd.nextInt(720), new ImageView(TextureLoader.getRock())));
+            rockLinkedList.add(new Rock(x, rnd.nextInt(720), new ImageView(GameTextureLoader.getRock())));
+        }
+        for (Rock r:rockLinkedList){
+            r.getTexture().setFitHeight(40);
+            r.getTexture().setFitWidth(40);
         }
         for (Rock r : rockLinkedList) {
             rocks.getChildren().addAll(r.getHitbox(), r.getTexture());
@@ -67,7 +76,9 @@ public final class Space {
 
     private Group spawnShip() { // try to make a better version
         Group ship = new Group();
-        player = new SpaceShip(0, 0, new ImageView(TextureLoader.getShip()));
+        player = new SpaceShip(0, 0, new ImageView(GameTextureLoader.getShip()));
+        player.getTexture().setFitHeight(60);
+        player.getTexture().setFitWidth(80);
         ship.getChildren().addAll(player.getTriangleHitbox(),player.getTexture());
         return ship;
     }
@@ -78,6 +89,7 @@ public final class Space {
     }
 
     public void adjustDifficulty() {
+        countScore();
         difficulty += 0.0015;
         if ((int) difficulty >= NUMBER_OF_ROCKS + 1) {
             difficulty = NUMBER_OF_ROCKS + 1;
@@ -102,16 +114,27 @@ public final class Space {
         }
     }
 
+    private void countScore(){
+        score++;
+    }
+
+    public long getScore(){
+        return score;
+    }
+
     public void collide(){//add UI exit here
         for(Rock r:rockLinkedList){
             if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(0),player.getTriangleHitbox().getPoints().get(1))){
-                exit();
+                System.out.println("Game Over");
+                //game over method
             }
             if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(2),player.getTriangleHitbox().getPoints().get(3))){
-                System.out.println("GG");
+                System.out.println("Game Over");
+                //game over method
             }
             if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(4),player.getTriangleHitbox().getPoints().get(5))){
-                System.out.println("GG");
+                System.out.println("Game Over");
+                //game over method
             }
         }
 

@@ -4,11 +4,9 @@ import javafx.scene.image.ImageView;
 
 class Star extends SpaceObject {
 
-    static private int starID;
 
     Star(int x, int y, ImageView texture) {
         super(x, y, texture);
-        starID++;
     }
 
 
@@ -24,11 +22,6 @@ class Star extends SpaceObject {
 
     private void reset() {
         this.getTexture().setX(1080);
-    }
-
-    @SuppressWarnings("unused")
-    public static int getStarID() {
-        return starID;
     }
 
 }
