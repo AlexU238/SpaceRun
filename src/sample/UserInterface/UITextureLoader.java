@@ -10,6 +10,7 @@ public final class UITextureLoader {
     private static Image settingsButtonTexture;
     private static Image scoreBoardButtonTexture;
     private static Image exitButtonTexture;
+    private static Image background;
 
     private UITextureLoader() {
 
@@ -51,6 +52,13 @@ public final class UITextureLoader {
             System.out.println("UserInterface: ");
             exitButtonTexture = defaultTexture;
         }
+        try {
+            InputStream menuBackgroundTextureInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.BACKGROUND.getFileName());
+            background = new Image(menuBackgroundTextureInputStream);
+        } catch (NullPointerException e) {
+            System.out.println("UserInterface: background");
+            background = defaultTexture;
+        }
 
     }
 
@@ -72,5 +80,9 @@ public final class UITextureLoader {
 
     static Image getExitButtonTexture() {
         return exitButtonTexture;
+    }
+
+    public static Image getBackground() {
+        return background;
     }
 }

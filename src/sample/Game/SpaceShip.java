@@ -28,7 +28,7 @@ class SpaceShip extends SpaceObject implements Ship {
                 triangleHitboxMiddleRightPointX, triangleHitboxMiddleRightPointY
         );
         this.triangleHitbox.setFill(Color.RED);//temporary. The color will be transparent
-        this.getTexture().setX(triangleHitboxTopPointX-30);
+        this.getTexture().setX(triangleHitboxTopPointX - 30);
         this.getTexture().setY(triangleHitboxTopPointY);
     }
 

@@ -6,7 +6,8 @@ public enum UITextureConstants {
     START_BUTTON("\\UITextures\\start.png"),
     SETTINGS_BUTTON("\\UITextures\\settings.png"),
     SCORE_BOARD_BUTTON("\\UITextures\\scoreBoard.png"),
-    EXIT_BUTTON("\\UITextures\\exit.png");
+    EXIT_BUTTON("\\UITextures\\exit.png"),
+    BACKGROUND("\\UITextures\\background.gif");
 
     private final String fileName;
 

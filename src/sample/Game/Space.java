@@ -9,10 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import static javafx.application.Platform.exit;
-
-
-public final class Space {
+final class Space {
 
     private LinkedList<Star> starLinkedList;
     private LinkedList<Rock> rockLinkedList;
@@ -21,7 +18,8 @@ public final class Space {
     private Rectangle background;
     private static final int NUMBER_OF_ROCKS = 10;//initially it was 20, but it was unreal to beat, so it was changed to 10
     private static final int NUMBER_OF_STARS = 11;
-    private long score=0;
+    private double score = 0;
+
 
     private Space() {
         this.starLinkedList = new LinkedList<>();
@@ -33,9 +31,10 @@ public final class Space {
         this.background.setHeight(720);
         this.background.setFill(Color.BLACK);
         GameTextureLoader.loadMainThreeTextures();
+
     }
 
-    public static Space connectToSpace() {
+    static Space connectToSpace() {
         return new Space();
     }
 
@@ -47,13 +46,13 @@ public final class Space {
             starLinkedList.add(new Star(x, y, new ImageView(GameTextureLoader.getStar())));
             x += 100;
         }
-        for (Star s:starLinkedList){
-            s.getTexture().setFitWidth(102);
-            s.getTexture().setFitHeight(722);
-        }
-        for (Star s : starLinkedList) {
-            stars.getChildren().add(s.getTexture());
-        }
+
+        starLinkedList.forEach(star -> {
+            star.getTexture().setFitWidth(102);
+            star.getTexture().setFitHeight(722);
+        });
+
+        starLinkedList.forEach(star -> stars.getChildren().add(star.getTexture()));
         return stars;
     }
 
@@ -64,13 +63,11 @@ public final class Space {
         for (int i = 0; i <= NUMBER_OF_ROCKS; i++) {
             rockLinkedList.add(new Rock(x, rnd.nextInt(720), new ImageView(GameTextureLoader.getRock())));
         }
-        for (Rock r:rockLinkedList){
-            r.getTexture().setFitHeight(40);
-            r.getTexture().setFitWidth(40);
-        }
-        for (Rock r : rockLinkedList) {
-            rocks.getChildren().addAll(r.getHitbox(), r.getTexture());
-        }
+        rockLinkedList.forEach((rock -> {
+            rock.getTexture().setFitHeight(40);
+            rock.getTexture().setFitWidth(40);
+        }));
+        rockLinkedList.forEach((rock -> rocks.getChildren().addAll(rock.getHitbox(), rock.getTexture())));
         return rocks;
     }
 
@@ -79,30 +76,30 @@ public final class Space {
         player = new SpaceShip(0, 0, new ImageView(GameTextureLoader.getShip()));
         player.getTexture().setFitHeight(60);
         player.getTexture().setFitWidth(80);
-        ship.getChildren().addAll(player.getTriangleHitbox(),player.getTexture());
+        ship.getChildren().addAll(player.getTriangleHitbox(), player.getTexture());
         return ship;
     }
 
-
-    public EventHandler<KeyEvent> startShip() {
+    EventHandler<KeyEvent> startShip() {
         return player.giveAccessToShipControls();
     }
 
-    public void adjustDifficulty() {
-        countScore();
+    void adjustDifficulty() {
+
         difficulty += 0.0015;
+        if (difficulty >= 1) {
+            countScore();
+        }
         if ((int) difficulty >= NUMBER_OF_ROCKS + 1) {
             difficulty = NUMBER_OF_ROCKS + 1;
         }
     }
 
-    public void moveBackGround() {
-        for (Star s : starLinkedList) {
-            s.move();
-        }
+    void moveBackGround() {
+        starLinkedList.forEach((Star::move));
     }
 
-    public void moveRocks() {
+    void moveRocks() {
         for (int i = 0; i <= difficulty - 1; i++) {
             launchRocks(i);
         }
@@ -114,52 +111,56 @@ public final class Space {
         }
     }
 
-    private void countScore(){
-        score++;
+    private void countScore() {
+        score = score + 0.05;
     }
 
-    public long getScore(){
-        return score;
+    String getScore() {
+        return "Score: " + (int) score;
     }
 
-    public void collide(){//add UI exit here
-        for(Rock r:rockLinkedList){
-            if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(0),player.getTriangleHitbox().getPoints().get(1))){
+    boolean collide() {
+
+        for (Rock rock : rockLinkedList) {
+            if (rock.getHitbox().contains(player.getTriangleHitbox().getPoints().get(0), player.getTriangleHitbox().getPoints().get(1))) {
                 System.out.println("Game Over");
-                //game over method
+                player.setTexture(new ImageView()); //find Explosion gif
+                return true;
             }
-            if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(2),player.getTriangleHitbox().getPoints().get(3))){
+            if (rock.getHitbox().contains(player.getTriangleHitbox().getPoints().get(2), player.getTriangleHitbox().getPoints().get(3))) {
                 System.out.println("Game Over");
-                //game over method
+                player.setTexture(new ImageView()); //find Explosion gif
+                return true;
             }
-            if (r.getHitbox().contains(player.getTriangleHitbox().getPoints().get(4),player.getTriangleHitbox().getPoints().get(5))){
+            if (rock.getHitbox().contains(player.getTriangleHitbox().getPoints().get(4), player.getTriangleHitbox().getPoints().get(5))) {
                 System.out.println("Game Over");
-                //game over method
+                player.setTexture(new ImageView()); //find Explosion gif
+                return true;
             }
         }
-
+        return false;
     }
 
-    public Group getStars() {
+
+    Group getStars() {
         return generateStars();
     }
 
-    public Group getRocks() {
+    Group getRocks() {
         return generateRocks();
     }
 
-    public Group getShip() {
+    Group getShip() {
         return spawnShip();
     }
 
-    public float getDifficulty() {
+    float getDifficulty() {
         return difficulty;
     }
 
-    public Rectangle getBackground() {
+    Rectangle getBackground() {
         return background;
     }
-
 
 }
 

@@ -20,7 +20,6 @@ class Rock extends SpaceObject {
 
     @Override
     void move() {
-
         if (this.getTexture().getX() > -100) {
             this.getTexture().setX(this.getTexture().getX() - 1);
             this.getHitbox().setCenterX(this.getHitbox().getCenterX() - 1);

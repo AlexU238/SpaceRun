@@ -42,6 +42,10 @@ abstract class SpaceObject {
         return texture;
     }
 
+    public void setTexture(ImageView texture) {
+        this.texture = texture;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
