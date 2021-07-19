@@ -14,7 +14,7 @@ class Rock extends SpaceObject {
         hitbox.setCenterY(y + 20);
         hitbox.setCenterX(x + 20);
         hitbox.setRadius(20);
-        hitbox.setFill(Color.RED); //temp color. will be transparent
+        hitbox.setFill(Color.TRANSPARENT);
     }
 
 
