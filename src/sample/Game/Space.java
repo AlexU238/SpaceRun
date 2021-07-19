@@ -76,8 +76,12 @@ final class Space {
         player = new SpaceShip(0, 0, new ImageView(GameTextureLoader.getShip()));
         player.getTexture().setFitHeight(60);
         player.getTexture().setFitWidth(80);
-        ship.getChildren().addAll(player.getTriangleHitbox(), player.getTexture());
+        ship.getChildren().addAll(player.getTriangleHitbox(), player.getTexture(), player.getExplosion());
         return ship;
+    }
+
+    void moveShipAdditionalTexture() {
+        player.move();
     }
 
     EventHandler<KeyEvent> startShip() {
@@ -124,17 +128,17 @@ final class Space {
         for (Rock rock : rockLinkedList) {
             if (rock.getHitbox().contains(player.getTriangleHitbox().getPoints().get(0), player.getTriangleHitbox().getPoints().get(1))) {
                 System.out.println("Game Over");
-                player.setTexture(new ImageView()); //find Explosion gif
+                player.boom();
                 return true;
             }
             if (rock.getHitbox().contains(player.getTriangleHitbox().getPoints().get(2), player.getTriangleHitbox().getPoints().get(3))) {
                 System.out.println("Game Over");
-                player.setTexture(new ImageView()); //find Explosion gif
+                player.boom();
                 return true;
             }
             if (rock.getHitbox().contains(player.getTriangleHitbox().getPoints().get(4), player.getTriangleHitbox().getPoints().get(5))) {
                 System.out.println("Game Over");
-                player.setTexture(new ImageView()); //find Explosion gif
+                player.boom();
                 return true;
             }
         }
@@ -154,6 +158,7 @@ final class Space {
         return spawnShip();
     }
 
+    @SuppressWarnings("unused")
     float getDifficulty() {
         return difficulty;
     }

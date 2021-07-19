@@ -9,6 +9,7 @@ final class GameTextureLoader {
     private static Image rock;
     private static Image ship;
     private static Image defaultTexture;
+    private static Image explosion;
 
     private GameTextureLoader() {
     }
@@ -42,6 +43,13 @@ final class GameTextureLoader {
             System.out.println("Game: texture file for Ship is NOT FOUND");
             ship = defaultTexture;
         }
+        try {
+            InputStream imageInputExplosionTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.EXPLOSION.getFileName());
+            explosion = new Image(imageInputExplosionTexture);
+        } catch (NullPointerException e) {
+            System.out.println("Game: texture file for Explosion is NOT FOUND");
+            explosion = defaultTexture;
+        }
 
     }
 
@@ -55,5 +63,9 @@ final class GameTextureLoader {
 
     static Image getShip() {
         return ship;
+    }
+
+    static Image getExplosion() {
+        return explosion;
     }
 }

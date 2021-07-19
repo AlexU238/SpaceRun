@@ -16,37 +16,54 @@ public final class MainMenu {
     private Scene mainMenuScene;
     private SettingsPage settingsPage = SettingsPage.giveAccessToSettings();
     private Game game = new Game();
+    private VBox functionalMenuLayout;
+    private ImageView startButton;
+    private ImageView settingsButton;
+    private ImageView scoreBoardButton;
+    private ImageView exitButton;
+    private ImageView title;
+    private BackgroundImage backgroundImage;
 
 
     public MainMenu() {
-        VBox functionalMenuLayout = new VBox();
+        functionalMenuLayout = new VBox();
+        UITextureLoader.loadMainMenuTextures();
+        UITextureLoader.loadMenuBackground();
+        startButton = new ImageView(UITextureLoader.getStartButtonTexture());
+        settingsButton = new ImageView(UITextureLoader.getSettingsButtonTexture());
+        scoreBoardButton = new ImageView(UITextureLoader.getScoreBoardButtonTexture());
+        exitButton = new ImageView(UITextureLoader.getExitButtonTexture());
+        title = new ImageView(UITextureLoader.getTitle());
+        backgroundImage = new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT);
 
-        UITextureLoader.loadUserInterfaceTextures();
-        ImageView startButton = new ImageView(UITextureLoader.getStartButtonTexture());
-        ImageView settingsButton = new ImageView(UITextureLoader.getSettingsButtonTexture());
-        ImageView scoreBoardButton = new ImageView(UITextureLoader.getScoreBoardButtonTexture());
-        ImageView exitButton = new ImageView(UITextureLoader.getExitButtonTexture());
-        BackgroundImage backgroundImage = new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT);
 
+        setUpMainMenuPage();
+
+
+        mainMenuScene = new Scene(functionalMenuLayout, 1080, 720);
+    }
+
+    private void setUpMainMenuPage() {
         startButton.setOnMouseClicked(mouseEvent -> startGame());
         settingsButton.setOnMouseClicked(mouseEvent -> openSettingsPage());
         scoreBoardButton.setOnMouseClicked(mouseEvent -> openScoreBoard());
         exitButton.setOnMouseClicked(mouseEvent -> initiateExit());
 
-        functionalMenuLayout.getChildren().addAll(startButton, settingsButton, scoreBoardButton, exitButton);
+        functionalMenuLayout.getChildren().addAll(title, startButton, settingsButton, scoreBoardButton, exitButton);
 
-
-        functionalMenuLayout.setSpacing(30);
+        functionalMenuLayout.setSpacing(10);
         functionalMenuLayout.setAlignment(Pos.CENTER);
         functionalMenuLayout.setBackground(new Background(backgroundImage));
-
-        mainMenuScene = new Scene(functionalMenuLayout, 1080, 720);
     }
-
 
     public void openMenu() {
         Main.stage.setScene(mainMenuScene);
         Main.stage.show();
+    }
+
+    public void returnToMainMenuAfterGameOver() {
+        //save the score
+        openMenu();
     }
 
 
@@ -59,7 +76,7 @@ public final class MainMenu {
     }
 
     private void openScoreBoard() {
-        //the score will be sent to a database, but I need to learn about JDBC more.
+        //the scores will be sent to a database, but I need to learn about JDBC more.
     }
 
     private void initiateExit() {

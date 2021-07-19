@@ -42,6 +42,7 @@ abstract class SpaceObject {
         return texture;
     }
 
+    @SuppressWarnings("unused")
     public void setTexture(ImageView texture) {
         this.texture = texture;
     }

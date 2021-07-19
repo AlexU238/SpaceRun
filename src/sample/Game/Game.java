@@ -11,14 +11,13 @@ import sample.Main;
 
 public class Game {
     private Scene gameScene;
-    private Group gameGroup;
-    Text score = new Text();
+    private Text score = new Text();
 
     private Space space = Space.connectToSpace();
 
     public Game() {
 
-        gameGroup = new Group();
+        Group gameGroup = new Group();
         score.setFill(Color.WHITE);
         score.setFont(Font.font(48));
         score.setX(800);
@@ -36,6 +35,7 @@ public class Game {
                 space.moveBackGround();
                 space.moveRocks();
                 space.adjustDifficulty();
+                space.moveShipAdditionalTexture();
                 if (space.collide()) {
                     stop();
                     gameOver();
@@ -49,7 +49,8 @@ public class Game {
         Alert gameOverAlert = new Alert(Alert.AlertType.INFORMATION);
         gameOverAlert.setTitle(null);
         gameOverAlert.setHeaderText("GAME OVER");
-        gameOverAlert.setOnHidden(dialogEvent -> Main.mainMenu.openMenu());
+        gameOverAlert.setContentText(space.getScore().toUpperCase());
+        gameOverAlert.setOnHidden(dialogEvent -> Main.mainMenu.returnToMainMenuAfterGameOver());
         gameOverAlert.show();
     }
 
@@ -59,6 +60,7 @@ public class Game {
         Main.stage.show();
     }
 
+    @SuppressWarnings("unused")
     public Space getSpace() {
         return space;
     }

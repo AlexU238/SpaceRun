@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 class SpaceShip extends SpaceObject implements Ship {
-    //private String name;
+    private ImageView explosion;
     private Polygon triangleHitbox = new Polygon();
     private double triangleHitboxTopPointX = 100;
     private double triangleHitboxTopPointY = 331;
@@ -15,13 +15,12 @@ class SpaceShip extends SpaceObject implements Ship {
     private double triangleHitboxBottomPointY = 390;
     private double triangleHitboxMiddleRightPointX = 150;
     private double triangleHitboxMiddleRightPointY = 361;
-    private static double DEFAULT_SPEED_CONSTANT = 10;
+    private static final double DEFAULT_SPEED_CONSTANT = 10;
     private double speedDirectionUp = DEFAULT_SPEED_CONSTANT;
     private double speedDirectionDown = DEFAULT_SPEED_CONSTANT;
 
     SpaceShip(int x, int y, ImageView texture) {
         super(x, y, texture);
-        //this.name = name;
         this.triangleHitbox.getPoints().addAll(
                 triangleHitboxTopPointX, triangleHitboxTopPointY,
                 triangleHitboxBottomPointX, triangleHitboxBottomPointY,
@@ -30,12 +29,23 @@ class SpaceShip extends SpaceObject implements Ship {
         this.triangleHitbox.setFill(Color.RED);//temporary. The color will be transparent
         this.getTexture().setX(triangleHitboxTopPointX - 30);
         this.getTexture().setY(triangleHitboxTopPointY);
+        explosion = new ImageView(GameTextureLoader.getExplosion());
+        explosion.setFitWidth(80);
+        explosion.setFitHeight(60);
+        explosion.setX(this.getTexture().getX());
+        explosion.setY(this.getTexture().getY());
+        explosion.setVisible(false);
     }
 
 
     @Override
-    void move() { //I did not know what to do with this method, because I used a different movement mechanic and did not expect that I wont be able to incorporate it in this method. Oops
+    void move() {
+        explosion.setX(this.getTexture().getX());
+        explosion.setY(this.getTexture().getY());
+    }
 
+    void boom() {
+        explosion.setVisible(true);
     }
 
     private void moveUp() {
@@ -103,6 +113,15 @@ class SpaceShip extends SpaceObject implements Ship {
                     break;
             }
         }
+    }
+
+    ImageView getExplosion() {
+        return explosion;
+    }
+
+    @SuppressWarnings("unused")
+    void setExplosion(ImageView explosion) {
+        this.explosion = explosion;
     }
 
     @SuppressWarnings("unused")

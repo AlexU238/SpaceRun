@@ -1,6 +1,7 @@
 package sample.UserInterface;
 
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
@@ -9,18 +10,24 @@ import sample.Main;
 
 final class SettingsPage {
     private Scene settingsMenu;
+    private VBox settingsMenuLayout;
+    //private ImageView backToMainMenuButton;
 
     private SettingsPage() {
-
-        //ADD BUTTONS AND STUFF
-        UITextureLoader.loadUserInterfaceTextures();
-        VBox settingsMenuLayout = new VBox();
-        settingsMenuLayout.setBackground(new Background(new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT)));
+        settingsMenuLayout = new VBox();
+        setUpSettingsPage();
         settingsMenu = new Scene(settingsMenuLayout, 1080, 720);
     }
 
     static SettingsPage giveAccessToSettings() {
         return new SettingsPage();
+    }
+
+    private void setUpSettingsPage() {
+        //ADD BUTTONS AND STUFF
+        UITextureLoader.loadMenuBackground();
+
+        settingsMenuLayout.setBackground(new Background(new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT)));
     }
 
     void openSettings() {
@@ -29,6 +36,6 @@ final class SettingsPage {
     }
 
     void returnToMenu() {
-
+        Main.mainMenu.openMenu();
     }
 }
