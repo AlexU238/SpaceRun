@@ -13,7 +13,7 @@ import sample.Main;
 public class Game {
     private Scene gameScene;
     private Text score = new Text();
-
+    private GameMusic gameMusic = new GameMusic();
     private Space space = Space.connectToSpace();
 
     public Game() {
@@ -46,7 +46,16 @@ public class Game {
         animationTimer.start();
     }
 
+    public void startGame() {
+        startAnimation();
+        gameMusic.playMusic();
+        Main.stage.setScene(gameScene);
+        Main.stage.show();
+    }
+
     private void gameOver() {
+        gameMusic.stopPlayingMusic();
+        gameMusic.crashSound();
         Alert gameOverAlert = new Alert(Alert.AlertType.INFORMATION);
         gameOverAlert.setTitle(null);
         gameOverAlert.setHeaderText("GAME OVER");
@@ -55,11 +64,6 @@ public class Game {
         gameOverAlert.show();
     }
 
-    public void startGame() {
-        startAnimation();
-        Main.stage.setScene(gameScene);
-        Main.stage.show();
-    }
 
     @SuppressWarnings("unused")
     public Space getSpace() {

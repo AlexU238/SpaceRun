@@ -2,6 +2,8 @@ package sample.UserInterface;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -9,6 +11,10 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import sample.Main;
+
+import java.util.Optional;
+
+import static javafx.application.Platform.exit;
 
 
 final class SettingsPage {
@@ -37,7 +43,7 @@ final class SettingsPage {
     }
 
     private void setUpSettingsPage() {
-        changeName.setOnMouseClicked(mouseEvent -> changePlayerName(newName.getText()));
+        changeName.setOnMouseClicked(mouseEvent -> saveChangesInSettings(newName.getText()));
         returnToMenuButton.setOnMouseClicked(mouseEvent -> returnToMenu());
         UITextureLoader.loadMenuBackground();
         settingsMenuLayout.getChildren().addAll(settingsTitle, newName, changeName, returnToMenuButton);
@@ -52,8 +58,16 @@ final class SettingsPage {
         Main.stage.show();
     }
 
-    private void changePlayerName(String newName) {
-        Main.player.setName(newName);
+    private void saveChangesInSettings(String newName) {
+        Alert saveAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        saveAlert.setTitle("Settings");
+        saveAlert.setHeaderText("Confirm settings");
+        saveAlert.setContentText("Save changes?");
+
+        Optional<ButtonType> result = saveAlert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Main.player.setName(newName);
+        }
     }
 
     private void returnToMenu() {

@@ -2,22 +2,28 @@ package sample.UserInterface;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import sample.Game.Game;
 import sample.Main;
 
+
+import java.util.Optional;
 
 import static javafx.application.Platform.exit;
 
 public final class MainMenu {
     private Scene mainMenuScene;
     private SettingsPage settingsPage = SettingsPage.giveAccessToSettings();
+    private InterfaceMusic menuMusic = new InterfaceMusic();
     private Game game = new Game();
     private VBox functionalMenuLayout;
     private ImageView startButton;
@@ -33,8 +39,9 @@ public final class MainMenu {
         UITextureLoader.loadMainMenuTextures();
         UITextureLoader.loadMenuBackground();
 
-        playerInfoLabel = new Label("Name"+ Main.player.getName() + '\n' + "High Score:" + Main.player.getHighScore());
+        playerInfoLabel = new Label("Name: " + Main.player.getName() + '\n' + "High Score: " + Main.player.getHighScore());
         playerInfoLabel.setFont(Font.font(37));
+        playerInfoLabel.setTextFill(Color.YELLOW);
         playerInfoLabel.setBackground(new Background(new BackgroundImage(UITextureLoader.getPlayerInfoTexture(), null, null, null, BackgroundSize.DEFAULT)));
         functionalMenuLayout = new VBox();
 
@@ -65,21 +72,21 @@ public final class MainMenu {
     }
 
     public void openMenu() {
+        menuMusic.playMusic();
         Main.stage.setScene(mainMenuScene);
         Main.stage.show();
     }
 
     public void returnToMainMenuAfterGameOver(int score) {
         Main.player.updateScore(score);
-//        playerInfoLabel = new Label("Test"+ Main.player.getName() + '\n' + "Score:" + Main.player.getHighScore());
-        playerInfoLabel.setText("Name :"+ Main.player.getName() + '\n' + "High Score:" + Main.player.getHighScore());
+        playerInfoLabel.setText("Name: " + Main.player.getName() + '\n' + "High Score: " + Main.player.getHighScore());
 
         Main.save();
         openMenu();
     }
 
-
     private void startGame() {
+        menuMusic.stopPlayingMusic();
         game.startGame();
     }
 
@@ -88,6 +95,14 @@ public final class MainMenu {
     }
 
     private void initiateExit() {
-        exit();
+        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        exitAlert.setTitle("Space run exit");
+        exitAlert.setHeaderText("Exit game");
+        exitAlert.setContentText("Are you sure you wish to exit?");
+
+        Optional<ButtonType> result = exitAlert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            exit();
+        }
     }
 }
