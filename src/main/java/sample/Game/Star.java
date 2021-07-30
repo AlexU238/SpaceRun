@@ -7,6 +7,8 @@ class Star extends SpaceObject {
 
     Star(int x, int y, ImageView texture) {
         super(x, y, texture);
+        this.getTexture().setFitWidth(102);
+        this.getTexture().setFitHeight(722);
     }
 
 

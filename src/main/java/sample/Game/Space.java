@@ -14,22 +14,16 @@ final class Space {
     private LinkedList<Star> starLinkedList;
     private LinkedList<Rock> rockLinkedList;
     private SpaceShip player;
-    private float difficulty;
-    private Rectangle background;
+    private double difficulty;
     private static final int NUMBER_OF_ROCKS = 10;//initially it was 20, but it was unreal to beat, so it was changed to 10
     private static final int NUMBER_OF_STARS = 11;
+    private static final double DIFFICULTY_INCREASE = 0.0015;
     private double score = 0;
 
 
     private Space() {
         this.starLinkedList = new LinkedList<>();
         this.rockLinkedList = new LinkedList<>();
-        this.background = new Rectangle();
-        this.background.setY(0);
-        this.background.setX(-100);
-        this.background.setWidth(1180);
-        this.background.setHeight(720);
-        this.background.setFill(Color.BLACK);
         GameTextureLoader.loadMainThreeTextures();
 
     }
@@ -41,17 +35,10 @@ final class Space {
     private Group generateStars() {
         Group stars = new Group();
         int x = 0;
-        int y = 0;
         for (int i = 0; i <= NUMBER_OF_STARS; i++) {
-            starLinkedList.add(new Star(x, y, new ImageView(GameTextureLoader.getStar())));
+            starLinkedList.add(new Star(x, 0, new ImageView(GameTextureLoader.getStar())));
             x += 100;
         }
-
-        starLinkedList.forEach(star -> {
-            star.getTexture().setFitWidth(102);
-            star.getTexture().setFitHeight(722);
-        });
-
         starLinkedList.forEach(star -> stars.getChildren().add(star.getTexture()));
         return stars;
     }
@@ -63,10 +50,6 @@ final class Space {
         for (int i = 0; i <= NUMBER_OF_ROCKS; i++) {
             rockLinkedList.add(new Rock(x, rnd.nextInt(720), new ImageView(GameTextureLoader.getRock())));
         }
-        rockLinkedList.forEach((rock -> {
-            rock.getTexture().setFitHeight(40);
-            rock.getTexture().setFitWidth(40);
-        }));
         rockLinkedList.forEach((rock -> rocks.getChildren().addAll(rock.getHitbox(), rock.getTexture())));
         return rocks;
     }
@@ -74,8 +57,6 @@ final class Space {
     private Group spawnShip() { // try to make a better version
         Group ship = new Group();
         player = new SpaceShip(0, 0, new ImageView(GameTextureLoader.getShip()));
-        player.getTexture().setFitHeight(60);
-        player.getTexture().setFitWidth(80);
         ship.getChildren().addAll(player.getTriangleHitbox(), player.getTexture(), player.getExplosion());
         return ship;
     }
@@ -84,17 +65,12 @@ final class Space {
         player.move();
     }
 
-    EventHandler<KeyEvent> startShip() {
-        return player.giveAccessToShipControls();
-    }
-
     void adjustDifficulty() {
-
-        difficulty += 0.0015;
-        if (difficulty >= 1) {
+        setDifficulty(getDifficulty() + DIFFICULTY_INCREASE);
+        if (getDifficulty() >= 1) {
             countScore();
         }
-        if ((int) difficulty >= NUMBER_OF_ROCKS + 1) {
+        if ((int) getDifficulty() >= NUMBER_OF_ROCKS + 1) {
             difficulty = NUMBER_OF_ROCKS + 1;
         }
     }
@@ -104,7 +80,7 @@ final class Space {
     }
 
     void moveRocks() {
-        for (int i = 0; i <= difficulty - 1; i++) {
+        for (int i = 0; i <= getDifficulty() - 1; i++) {
             launchRocks(i);
         }
     }
@@ -119,12 +95,8 @@ final class Space {
         score = score + 0.05;
     }
 
-    int getScore() {
-        return (int) score;
-    }
-
     String printScore() {
-        return "Score: " + (int) score;
+        return "Score: " + getScore();
     }
 
     boolean collide() {
@@ -150,26 +122,32 @@ final class Space {
     }
 
 
-    Group getStars() {
+    Group getStarsGroup() {
         return generateStars();
     }
 
-    Group getRocks() {
+    Group getRocksGroup() {
         return generateRocks();
     }
 
-    Group getShip() {
+    Group getShipGroup() {
         return spawnShip();
     }
 
-    @SuppressWarnings("unused")
-    float getDifficulty() {
+    EventHandler<KeyEvent> getShipControls() {
+        return player.giveAccessToShipControls();
+    }
+
+    int getScore() {
+        return (int) score;
+    }
+
+    double getDifficulty() {
         return difficulty;
     }
 
-    Rectangle getBackground() {
-        return background;
+    void setDifficulty(double difficulty) {
+        this.difficulty = difficulty;
     }
-
 }
 

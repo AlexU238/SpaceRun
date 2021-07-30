@@ -14,8 +14,6 @@ import sample.Main;
 
 import java.util.Optional;
 
-import static javafx.application.Platform.exit;
-
 
 final class SettingsPage {
     private Scene settingsMenu;
@@ -65,9 +63,12 @@ final class SettingsPage {
         saveAlert.setContentText("Save changes?");
 
         Optional<ButtonType> result = saveAlert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Main.player.setName(newName);
+        if (result.isPresent()) {
+            if (result.get() == ButtonType.OK) {
+                Main.player.setName(newName);
+            }
         }
+
     }
 
     private void returnToMenu() {

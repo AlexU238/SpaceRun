@@ -1,6 +1,7 @@
 package sample.Game;
 
 import javafx.scene.image.Image;
+import sample.CommonAlerts;
 
 import java.io.InputStream;
 
@@ -18,9 +19,9 @@ final class GameTextureLoader {
         try {
             InputStream imageInputNoTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.DEFAULT.getFileName());
             defaultTexture = new Image(imageInputNoTexture);
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException e) {
             System.out.println("Game: texture file for defaultTexture is not NOT FOUND");
-            //return to menu??
+            CommonAlerts.loadDefaultTextureAlert();
         }
         try {
             InputStream imageInputStarTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.STAR_TEXTURES.getFileName());
@@ -28,6 +29,7 @@ final class GameTextureLoader {
         } catch (NullPointerException e) {
             System.out.println("Game: texture file for Star is NOT FOUND");
             star = defaultTexture;
+            CommonAlerts.loadGameTexturesAlert();
         }
         try {
             InputStream imageInputRockTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.ROCK_TEXTURES.getFileName());
@@ -35,6 +37,7 @@ final class GameTextureLoader {
         } catch (NullPointerException ex) {
             System.out.println("Game: texture file for Rock is NOT FOUND");
             rock = defaultTexture;
+            CommonAlerts.loadGameTexturesAlert();
         }
         try {
             InputStream imageInputShipTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.SHIP_TEXTURES.getFileName());
@@ -42,6 +45,7 @@ final class GameTextureLoader {
         } catch (NullPointerException ex) {
             System.out.println("Game: texture file for Ship is NOT FOUND");
             ship = defaultTexture;
+            CommonAlerts.loadGameTexturesAlert();
         }
         try {
             InputStream imageInputExplosionTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.EXPLOSION.getFileName());
@@ -49,6 +53,7 @@ final class GameTextureLoader {
         } catch (NullPointerException e) {
             System.out.println("Game: texture file for Explosion is NOT FOUND");
             explosion = defaultTexture;
+            CommonAlerts.loadGameTexturesAlert();
         }
 
     }

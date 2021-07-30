@@ -15,6 +15,8 @@ class Rock extends SpaceObject {
         hitbox.setCenterX(x + 20);
         hitbox.setRadius(20);
         hitbox.setFill(Color.TRANSPARENT);
+        this.getTexture().setFitHeight(40);
+        this.getTexture().setFitWidth(40);
     }
 
 

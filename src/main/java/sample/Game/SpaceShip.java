@@ -29,12 +29,15 @@ class SpaceShip extends SpaceObject implements Ship {
         this.triangleHitbox.setFill(Color.TRANSPARENT);
         this.getTexture().setX(triangleHitboxTopPointX - 30);
         this.getTexture().setY(triangleHitboxTopPointY);
+        this.getTexture().setFitHeight(60);
+        this.getTexture().setFitWidth(80);
         explosion = new ImageView(GameTextureLoader.getExplosion());
         explosion.setFitWidth(80);
         explosion.setFitHeight(60);
         explosion.setX(this.getTexture().getX());
         explosion.setY(this.getTexture().getY());
         explosion.setVisible(false);
+
     }
 
 
@@ -62,7 +65,6 @@ class SpaceShip extends SpaceObject implements Ship {
         if (this.getTriangleHitbox().getPoints().get(1) == 1) {
             speedDirectionUp = 0;
         } else returnToDefaultSpeed();
-
     }
 
     private void moveDown() {
@@ -120,22 +122,12 @@ class SpaceShip extends SpaceObject implements Ship {
     }
 
     @SuppressWarnings("unused")
-    void setExplosion(ImageView explosion) {
-        this.explosion = explosion;
-    }
-
-    @SuppressWarnings("unused")
     private void setTriangleHitbox(Polygon triangleHitbox) {
         this.triangleHitbox = triangleHitbox;
     }
 
     private double getTriangleHitboxTopPointX() {
         return triangleHitboxTopPointX;
-    }
-
-    @SuppressWarnings("unused")
-    private void setTriangleHitboxTopPointX(double triangleHitboxTopPointX) {
-        this.triangleHitboxTopPointX = triangleHitboxTopPointX;
     }
 
     @SuppressWarnings("unused")

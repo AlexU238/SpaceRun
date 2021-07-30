@@ -23,9 +23,9 @@ public class Game {
         score.setFont(Font.font(48));
         score.setX(800);
         score.setY(100);
-        gameGroup.getChildren().addAll(space.getBackground(), space.getStars(), space.getRocks(), space.getShip(), score);
+        gameGroup.getChildren().addAll(space.getStarsGroup(), space.getRocksGroup(), space.getShipGroup(), score);
         gameScene = new Scene(gameGroup, 1080, 720);
-        gameScene.setOnKeyPressed(space.startShip());
+        gameScene.setOnKeyPressed(space.getShipControls());
     }
 
     private void startAnimation() {

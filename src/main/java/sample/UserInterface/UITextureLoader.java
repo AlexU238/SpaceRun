@@ -1,6 +1,7 @@
 package sample.UserInterface;
 
 import javafx.scene.image.Image;
+import sample.CommonAlerts;
 
 import java.io.InputStream;
 
@@ -26,6 +27,7 @@ final class UITextureLoader {
             defaultTexture = new Image(defaultButtonTextureInputStream);
         } catch (NullPointerException e) {
             System.out.println("UserInterface: default texture NOT FOUND");
+            CommonAlerts.loadDefaultTextureAlert();
         }
     }
 
@@ -36,6 +38,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("UserInterface: Start Button texture NOT FOUND");
             startButtonTexture = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
         try {
             InputStream settingsButtonTextureInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.SETTINGS_BUTTON.getFileName());
@@ -43,6 +46,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("UserInterface: Settings button texture NOT FOUND");
             settingsButtonTexture = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
         try {
             InputStream playerInfoTextureInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.PLAYER_INFO.getFileName());
@@ -50,6 +54,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("UserInterface: Score Board button texture NOT FOUND");
             playerInfoTexture = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
         try {
             InputStream exitButtonTextureInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.EXIT_BUTTON.getFileName());
@@ -57,6 +62,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("UserInterface: Exit button texture NOT FOUND");
             exitButtonTexture = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
         try {
             InputStream titleInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.TITLE.getFileName());
@@ -64,6 +70,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("UserInterface: Title texture NOT FOUND");
             mainMenuTitle = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
 
 
@@ -76,6 +83,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("Menu Background: Menu background texture NOT FOUND");
             background = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
     }
 
@@ -86,6 +94,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("Settings: Back button texture NOT FOUND");
             backButtonTexture = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
         try {
             InputStream changeNameButtonTextureInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.CHANGE_PLAYER_NAME_BUTTON.getFileName());
@@ -93,6 +102,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("Settings: Change player name button texture NOT FOUND");
             changeNameButton = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
         try {
             InputStream settingsTitleTextureInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.SETTINGS_TITLE.getFileName());
@@ -100,6 +110,7 @@ final class UITextureLoader {
         } catch (NullPointerException e) {
             System.out.println("Settings: Settings title image not found texture NOT FOUND");
             settingsTitle = defaultTexture;
+            CommonAlerts.loadInterfaceTexturesAlert();
         }
     }
 
