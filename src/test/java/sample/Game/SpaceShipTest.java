@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceShipTest {
-    SpaceShip testSpaceShip;
+    private SpaceShip testSpaceShip;
 
     @BeforeEach
     void setUp() {

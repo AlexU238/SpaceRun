@@ -45,7 +45,7 @@ final class SettingsPage {
         returnToMenuButton.setOnMouseClicked(mouseEvent -> returnToMenu());
         UITextureLoader.loadMenuBackground();
         settingsMenuLayout.getChildren().addAll(settingsTitle, newName, changeName, returnToMenuButton);
-        settingsMenuLayout.setSpacing(20);
+    //    settingsMenuLayout.setSpacing(10);
         settingsMenuLayout.setAlignment(Pos.CENTER);
         newName.setMaxWidth(200);
         settingsMenuLayout.setBackground(new Background(new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT)));

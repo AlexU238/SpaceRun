@@ -40,7 +40,7 @@ public final class MainMenu {
         UITextureLoader.loadMenuBackground();
 
         playerInfoLabel = new Label("Name: " + Main.player.getName() + '\n' + "High Score: " + Main.player.getHighScore());
-        playerInfoLabel.setFont(Font.font(37));
+        playerInfoLabel.setFont(Font.font(40));
         playerInfoLabel.setTextFill(Color.YELLOW);
         playerInfoLabel.setBackground(new Background(new BackgroundImage(UITextureLoader.getPlayerInfoTexture(), null, null, null, BackgroundSize.DEFAULT)));
         functionalMenuLayout = new VBox();
@@ -52,9 +52,7 @@ public final class MainMenu {
         title = new ImageView(UITextureLoader.getMainMenuTitle());
         backgroundImage = new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT);
 
-
         setUpMainMenuPage();
-
 
         mainMenuScene = new Scene(functionalMenuLayout, 1080, 720);
     }
@@ -64,7 +62,7 @@ public final class MainMenu {
         settingsButton.setOnMouseClicked(mouseEvent -> openSettingsPage());
         exitButton.setOnMouseClicked(mouseEvent -> initiateExit());
 
-        functionalMenuLayout.getChildren().addAll(title, startButton, settingsButton, exitButton, playerInfoLabel);
+        functionalMenuLayout.getChildren().addAll(title, startButton, settingsButton, playerInfoLabel, exitButton);
 
         functionalMenuLayout.setSpacing(10);
         functionalMenuLayout.setAlignment(Pos.CENTER);
@@ -101,8 +99,10 @@ public final class MainMenu {
         exitAlert.setContentText("Are you sure you wish to exit?");
 
         Optional<ButtonType> result = exitAlert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            exit();
+        if (result.isPresent()) {
+            if (result.get() == ButtonType.OK) {
+                exit();
+            }
         }
     }
 }

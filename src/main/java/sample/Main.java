@@ -1,16 +1,14 @@
 package sample;
 
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import sample.UserInterface.MainMenu;
 import sample.UserInterface.Player;
 
-
 import java.io.*;
 
-
 public class Main extends Application {
+
     public static Stage stage;
     public static MainMenu mainMenu;
     public static Player player;
@@ -40,12 +38,8 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-        save();
-    }
 
-    public static void save() {
+     public static void save() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("PlayerData.ser");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -54,5 +48,11 @@ public class Main extends Application {
         } catch (IOException e) {
             System.out.println("Cannot save player data");
         }
+    }
+
+    public static void main(String[] args) {
+
+        launch(args);
+        Main.save();
     }
 }

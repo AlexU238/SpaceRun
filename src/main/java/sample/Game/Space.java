@@ -6,8 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 final class Space {
 
@@ -24,7 +22,7 @@ final class Space {
     private Space() {
         this.starLinkedList = new LinkedList<>();
         this.rockLinkedList = new LinkedList<>();
-        GameTextureLoader.loadMainThreeTextures();
+        GameTextureLoader.loadGameTextures();
 
     }
 
@@ -146,7 +144,7 @@ final class Space {
         return difficulty;
     }
 
-    void setDifficulty(double difficulty) {
+    private void setDifficulty(double difficulty) {
         this.difficulty = difficulty;
     }
 }

@@ -15,7 +15,7 @@ final class GameTextureLoader {
     private GameTextureLoader() {
     }
 
-    static void loadMainThreeTextures() {
+    static void loadGameTextures() {
         try {
             InputStream imageInputNoTexture = GameTextureLoader.class.getResourceAsStream(GameTextureConstants.DEFAULT.getFileName());
             defaultTexture = new Image(imageInputNoTexture);
