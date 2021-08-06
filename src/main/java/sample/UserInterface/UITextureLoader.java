@@ -5,7 +5,7 @@ import sample.CommonAlerts;
 
 import java.io.InputStream;
 
-final class UITextureLoader {
+public final class UITextureLoader {
     private static Image defaultTexture;
     private static Image startButtonTexture;
     private static Image settingsButtonTexture;
@@ -16,6 +16,7 @@ final class UITextureLoader {
     private static Image mainMenuTitle;
     private static Image changeNameButton;
     private static Image settingsTitle;
+    private static Image icon;
 
     private UITextureLoader() {
 
@@ -114,6 +115,15 @@ final class UITextureLoader {
         }
     }
 
+    public static void loadIcon() {
+        try {
+            InputStream iconInputStream = UITextureLoader.class.getResourceAsStream(UITextureConstants.ICON.getFileName());
+            icon = new Image(iconInputStream);
+        } catch (NullPointerException e) {
+            System.out.println("Icon: Icon NOT FOUND");
+        }
+    }
+
     @SuppressWarnings("unused")
     static Image getDefaultTexture() {
         return defaultTexture;
@@ -153,5 +163,9 @@ final class UITextureLoader {
 
     static Image getMainMenuTitle() {
         return mainMenuTitle;
+    }
+
+    public static Image getIcon() {
+        return icon;
     }
 }

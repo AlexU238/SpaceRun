@@ -105,4 +105,8 @@ public final class MainMenu {
             }
         }
     }
+
+    public Label getPlayerInfoLabel() {
+        return playerInfoLabel;
+    }
 }

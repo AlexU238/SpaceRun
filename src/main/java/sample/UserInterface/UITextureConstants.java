@@ -12,7 +12,8 @@ public enum UITextureConstants {
     TITLE("/UITextures/titleSpaceRun.png"),
     BACK_BUTTON("/UITextures/backButton.png"),
     CHANGE_PLAYER_NAME_BUTTON("/UITextures/saveSettings.png"),
-    SETTINGS_TITLE("/UITextures/settingsTitle.png");
+    SETTINGS_TITLE("/UITextures/settingsTitle.png"),
+    ICON("/UITextures/icon.png");
 
     private final String fileName;
 

@@ -66,6 +66,7 @@ final class SettingsPage {
         if (result.isPresent()) {
             if (result.get() == ButtonType.OK) {
                 Main.player.setName(newName);
+                Main.mainMenu.getPlayerInfoLabel().setText("Name: " + Main.player.getName() + '\n' + "High Score: " + Main.player.getHighScore());
             }
         }
 

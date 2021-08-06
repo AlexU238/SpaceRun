@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import sample.UserInterface.MainMenu;
 import sample.UserInterface.Player;
+import sample.UserInterface.UITextureLoader;
 
 import java.io.*;
 
@@ -16,7 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
+        UITextureLoader.loadIcon();
         try {
             FileInputStream fileInputStream = new FileInputStream("PlayerData.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -32,6 +33,7 @@ public class Main extends Application {
         stage = new Stage();
         stage.setTitle("Space run");
         stage.resizableProperty().setValue(false);
+        stage.getIcons().add(UITextureLoader.getIcon());
 
         mainMenu.openMenu();
 
