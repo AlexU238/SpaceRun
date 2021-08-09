@@ -2,10 +2,11 @@ package sample.UserInterface;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import sample.IMusicPlayer;
 
 import java.net.URISyntaxException;
 
-final class InterfaceMusic {
+public final class InterfaceMusic implements IMusicPlayer {
 
     private Media menuMusic;
     private MediaPlayer menuMusicPlayer;
@@ -26,15 +27,19 @@ final class InterfaceMusic {
         }
     }
 
-    void playMusic() {
+    public void playMusic() {
         menuMusicPlayer.setAutoPlay(true);
         menuMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         menuMusicPlayer.play();
     }
 
 
-    void stopPlayingMusic() {
+    public void stopPlayingMusic() {
         menuMusicPlayer.setAutoPlay(false);
         menuMusicPlayer.stop();
+    }
+
+    public void changeVolume(double volume){
+        menuMusicPlayer.setVolume(volume);
     }
 }

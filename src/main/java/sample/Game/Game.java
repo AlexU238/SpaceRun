@@ -49,8 +49,7 @@ public class Game {
     public void startGame() {
         startAnimation();
         gameMusic.playMusic();
-        Main.stage.setScene(gameScene);
-        Main.stage.show();
+        Main.setNewStageScene(gameScene);
     }
 
     private void gameOver() {
@@ -60,7 +59,7 @@ public class Game {
         gameOverAlert.setTitle(null);
         gameOverAlert.setHeaderText("GAME OVER");
         gameOverAlert.setContentText(space.printScore().toUpperCase());
-        gameOverAlert.setOnHidden(dialogEvent -> Main.mainMenu.returnToMainMenuAfterGameOver(space.getScore()));
+        gameOverAlert.setOnHidden(dialogEvent -> Main.returnToMainMenuAfterGameOver(space.getScore()));
         gameOverAlert.show();
     }
 
@@ -68,5 +67,9 @@ public class Game {
     @SuppressWarnings("unused")
     public Space getSpace() {
         return space;
+    }
+
+    public GameMusic getGameMusic() {
+        return gameMusic;
     }
 }

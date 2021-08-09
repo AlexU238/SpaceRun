@@ -8,7 +8,7 @@ public class CommonAlerts {
     }
 
 
-    public static void loadDefaultTextureAlert(){
+    public static void loadDefaultTextureAlert() {
         Alert loadDefaultAlert = new Alert(Alert.AlertType.WARNING);
         loadDefaultAlert.setTitle("Texture loader warning");
         loadDefaultAlert.setContentText("WARNING!");
@@ -16,7 +16,7 @@ public class CommonAlerts {
         loadDefaultAlert.showAndWait();
     }
 
-    public static void loadInterfaceTexturesAlert(){
+    public static void loadInterfaceTexturesAlert() {
         Alert loadInterfaceAlert = new Alert(Alert.AlertType.WARNING);
         loadInterfaceAlert.setTitle("Texture loader warning");
         loadInterfaceAlert.setContentText("WARNING!");
@@ -24,7 +24,7 @@ public class CommonAlerts {
         loadInterfaceAlert.showAndWait();
     }
 
-    public static void loadGameTexturesAlert(){
+    public static void loadGameTexturesAlert() {
         Alert loadGameAlert = new Alert(Alert.AlertType.WARNING);
         loadGameAlert.setTitle("Texture loader warning");
         loadGameAlert.setContentText("WARNING!");

@@ -39,7 +39,7 @@ public final class MainMenu {
         UITextureLoader.loadMainMenuTextures();
         UITextureLoader.loadMenuBackground();
 
-        playerInfoLabel = new Label("Name: " + Main.player.getName() + '\n' + "High Score: " + Main.player.getHighScore());
+        playerInfoLabel = new Label("Name: " + Main.getPlayerName() + '\n' + "High Score: " + Main.getPlayerScore());
         playerInfoLabel.setFont(Font.font(40));
         playerInfoLabel.setTextFill(Color.YELLOW);
         playerInfoLabel.setBackground(new Background(new BackgroundImage(UITextureLoader.getPlayerInfoTexture(), null, null, null, BackgroundSize.DEFAULT)));
@@ -50,7 +50,6 @@ public final class MainMenu {
 
         exitButton = new ImageView(UITextureLoader.getExitButtonTexture());
         title = new ImageView(UITextureLoader.getMainMenuTitle());
-        backgroundImage = new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT);
 
         setUpMainMenuPage();
 
@@ -66,22 +65,15 @@ public final class MainMenu {
 
         functionalMenuLayout.setSpacing(10);
         functionalMenuLayout.setAlignment(Pos.CENTER);
-        functionalMenuLayout.setBackground(new Background(backgroundImage));
+//        functionalMenuLayout.setBackground(new Background(backgroundImage));
+        functionalMenuLayout.setBackground(new MenuBackgroundFactory().createBackground());
     }
 
     public void openMenu() {
         menuMusic.playMusic();
-        Main.stage.setScene(mainMenuScene);
-        Main.stage.show();
+        Main.setNewStageScene(mainMenuScene);
     }
 
-    public void returnToMainMenuAfterGameOver(int score) {
-        Main.player.updateScore(score);
-        playerInfoLabel.setText("Name: " + Main.player.getName() + '\n' + "High Score: " + Main.player.getHighScore());
-
-        Main.save();
-        openMenu();
-    }
 
     private void startGame() {
         menuMusic.stopPlayingMusic();
@@ -109,4 +101,14 @@ public final class MainMenu {
     public Label getPlayerInfoLabel() {
         return playerInfoLabel;
     }
+
+    InterfaceMusic getMenuMusic() {
+        return menuMusic;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+
 }

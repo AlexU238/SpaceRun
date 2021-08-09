@@ -2,10 +2,11 @@ package sample.Game;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import sample.IMusicPlayer;
 
 import java.net.URISyntaxException;
 
-final class GameMusic {
+public final class GameMusic implements IMusicPlayer {
     private Media mediaGame;
     private Media crashSound;
     private MediaPlayer mediaPlayerGame;
@@ -40,14 +41,14 @@ final class GameMusic {
         }
     }
 
-    void playMusic() {
+    public void playMusic() {
         mediaPlayerGame.setAutoPlay(true);
         mediaPlayerGame.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayerGame.play();
     }
 
 
-    void stopPlayingMusic() {
+    public void stopPlayingMusic() {
         mediaPlayerGame.setAutoPlay(false);
         mediaPlayerGame.stop();
     }
@@ -55,6 +56,10 @@ final class GameMusic {
 
     void crashSound() {
         crashSoundPlayer.play();
+    }
+
+    public void changeVolume(double volume){
+        mediaPlayerGame.setVolume(volume);
     }
 
 }
