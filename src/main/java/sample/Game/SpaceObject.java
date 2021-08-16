@@ -12,7 +12,7 @@ abstract class SpaceObject {
         texture.setY(y);
     }
 
-    abstract void move();
+    abstract void move(double direction);
 
     ImageView getTexture() {
         return texture;

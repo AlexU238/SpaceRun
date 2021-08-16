@@ -17,7 +17,6 @@ public class Game {
     private Space space = Space.connectToSpace();
 
     public Game() {
-
         Group gameGroup = new Group();
         score.setFill(Color.WHITE);
         score.setFont(Font.font(48));

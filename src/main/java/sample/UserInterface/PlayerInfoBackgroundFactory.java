@@ -4,11 +4,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 
-
-public class MenuBackgroundFactory implements BackgroundFactory {
-
+public class PlayerInfoBackgroundFactory implements BackgroundFactory {
     @Override
     public Background createBackground() {
-        return new Background(new BackgroundImage(UITextureLoader.loadMenuBackground(), null, null, null, BackgroundSize.DEFAULT));
+        return new Background(new BackgroundImage(UITextureLoader.loadMainMenuPlayerInfoTexture(), null, null, null, BackgroundSize.DEFAULT));
     }
 }

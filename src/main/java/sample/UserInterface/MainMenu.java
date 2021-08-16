@@ -6,9 +6,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -22,8 +19,8 @@ import static javafx.application.Platform.exit;
 
 public final class MainMenu {
     private Scene mainMenuScene;
-    private SettingsPage settingsPage = SettingsPage.giveAccessToSettings();
-    private InterfaceMusic menuMusic = new InterfaceMusic();
+    private SettingsPage settingsPage;
+    private InterfaceMusic menuMusic;
     private Game game = new Game();
     private VBox functionalMenuLayout;
     private ImageView startButton;
@@ -31,25 +28,25 @@ public final class MainMenu {
     private Label playerInfoLabel;
     private ImageView exitButton;
     private ImageView title;
-    private BackgroundImage backgroundImage;
 
 
     public MainMenu() {
-        UITextureLoader.loadDefaultTexture();
-        UITextureLoader.loadMainMenuTextures();
-        UITextureLoader.loadMenuBackground();
+
+
+        settingsPage = new SettingsPage();
+        menuMusic = new InterfaceMusic();
 
         playerInfoLabel = new Label("Name: " + Main.getPlayerName() + '\n' + "High Score: " + Main.getPlayerScore());
         playerInfoLabel.setFont(Font.font(40));
         playerInfoLabel.setTextFill(Color.YELLOW);
-        playerInfoLabel.setBackground(new Background(new BackgroundImage(UITextureLoader.getPlayerInfoTexture(), null, null, null, BackgroundSize.DEFAULT)));
+        playerInfoLabel.setBackground(new PlayerInfoBackgroundFactory().createBackground());
         functionalMenuLayout = new VBox();
 
-        startButton = new ImageView(UITextureLoader.getStartButtonTexture());
-        settingsButton = new ImageView(UITextureLoader.getSettingsButtonTexture());
+        startButton=new ImageView(UITextureLoader.loadMainMenuStartButtonTexture());
+        settingsButton = new ImageView(UITextureLoader.loadMainMenuSettingsButtonTexture());
 
-        exitButton = new ImageView(UITextureLoader.getExitButtonTexture());
-        title = new ImageView(UITextureLoader.getMainMenuTitle());
+        exitButton = new ImageView(UITextureLoader.loadMainMenuExitButtonTexture());
+        title = new ImageView(UITextureLoader.loadMainMenuTitleTexture());
 
         setUpMainMenuPage();
 
@@ -65,7 +62,6 @@ public final class MainMenu {
 
         functionalMenuLayout.setSpacing(10);
         functionalMenuLayout.setAlignment(Pos.CENTER);
-//        functionalMenuLayout.setBackground(new Background(backgroundImage));
         functionalMenuLayout.setBackground(new MenuBackgroundFactory().createBackground());
     }
 

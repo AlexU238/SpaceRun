@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sample.Game.GameTextureLoader;
 import sample.UserInterface.MainMenu;
 import sample.UserInterface.Player;
 import sample.UserInterface.UITextureLoader;
@@ -19,7 +20,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        UITextureLoader.loadIcon();
         try {
             FileInputStream fileInputStream = new FileInputStream("PlayerData.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -30,11 +30,15 @@ public class Main extends Application {
             System.out.println("Could not locate file: PlayerData.ser");
             player = new Player("player", 0);
         }
+        TextureLoader uiTextureLoader = UITextureLoader.getInstance(); // these two instances were created to load default textures
+        GameTextureLoader gameTextureLoader = GameTextureLoader.getInstance(); //create a better implementation if possible
         mainMenu = new MainMenu();
         stage = new Stage();
         stage.setTitle("Space run");
         stage.resizableProperty().setValue(false);
-        stage.getIcons().add(UITextureLoader.getIcon());
+        stage.getIcons().add(UITextureLoader.loadIcon());
+
+
 
         startMenu();
 

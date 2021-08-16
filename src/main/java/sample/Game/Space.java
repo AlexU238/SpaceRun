@@ -22,8 +22,6 @@ final class Space {
     private Space() {
         this.starLinkedList = new LinkedList<>();
         this.rockLinkedList = new LinkedList<>();
-        GameTextureLoader.loadGameTextures();
-
     }
 
     static Space connectToSpace() {
@@ -34,7 +32,7 @@ final class Space {
         Group stars = new Group();
         int x = 0;
         for (int i = 0; i <= NUMBER_OF_STARS; i++) {
-            starLinkedList.add(new Star(x, 0, new ImageView(GameTextureLoader.getStar())));
+            starLinkedList.add(new Star(x, 0, new ImageView(GameTextureLoader.loadGameStarTexture())));
             x += 100;
         }
         starLinkedList.forEach(star -> stars.getChildren().add(star.getTexture()));
@@ -46,21 +44,21 @@ final class Space {
         Random rnd = new Random();
         int x = 1140;
         for (int i = 0; i <= NUMBER_OF_ROCKS; i++) {
-            rockLinkedList.add(new Rock(x, rnd.nextInt(720), new ImageView(GameTextureLoader.getRock())));
+            rockLinkedList.add(new Rock(x, rnd.nextInt(720), new ImageView(GameTextureLoader.loadGameRockTexture())));
         }
         rockLinkedList.forEach((rock -> rocks.getChildren().addAll(rock.getHitbox(), rock.getTexture())));
         return rocks;
     }
 
-    private Group spawnShip() { // try to make a better version
+    private Group spawnShip() {
         Group ship = new Group();
-        player = new SpaceShip(0, 0, new ImageView(GameTextureLoader.getShip()));
+        player = new SpaceShip(0, 0, new ImageView(GameTextureLoader.loadGameShipTexture()));
         ship.getChildren().addAll(player.getTriangleHitbox(), player.getTexture(), player.getExplosion());
         return ship;
     }
 
     void moveShipAdditionalTexture() {
-        player.move();
+        player.moveExplosionTexture();
     }
 
     void adjustDifficulty() {
@@ -74,7 +72,9 @@ final class Space {
     }
 
     void moveBackGround() {
-        starLinkedList.forEach((Star::move));
+        for(Star s: starLinkedList){
+            s.move(-1);
+        }
     }
 
     void moveRocks() {
@@ -85,7 +85,7 @@ final class Space {
 
     private void launchRocks(int starter) {
         for (int i = 0; i <= starter; i++) {
-            rockLinkedList.get(i).move();
+            rockLinkedList.get(i).move(-1);
         }
     }
 

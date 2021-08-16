@@ -16,33 +16,44 @@ class SpaceShip extends SpaceObject implements Ship {
     private double triangleHitboxMiddleRightPointX = 150;
     private double triangleHitboxMiddleRightPointY = 361;
     private static final double DEFAULT_SPEED_CONSTANT = 10;
-    private double speedDirectionUp = DEFAULT_SPEED_CONSTANT;
-    private double speedDirectionDown = DEFAULT_SPEED_CONSTANT;
+    private double speed=DEFAULT_SPEED_CONSTANT;
 
     SpaceShip(int x, int y, ImageView texture) {
         super(x, y, texture);
-        this.triangleHitbox.getPoints().addAll(
+        triangleHitbox.getPoints().addAll(
                 triangleHitboxTopPointX, triangleHitboxTopPointY,
                 triangleHitboxBottomPointX, triangleHitboxBottomPointY,
                 triangleHitboxMiddleRightPointX, triangleHitboxMiddleRightPointY
         );
-        this.triangleHitbox.setFill(Color.TRANSPARENT);
+        triangleHitbox.setFill(Color.TRANSPARENT);
         this.getTexture().setX(triangleHitboxTopPointX - 30);
         this.getTexture().setY(triangleHitboxTopPointY);
         this.getTexture().setFitHeight(60);
         this.getTexture().setFitWidth(80);
-        explosion = new ImageView(GameTextureLoader.getExplosion());
+        explosion = new ImageView(GameTextureLoader.loadGameExplosionTexture());
         explosion.setFitWidth(80);
         explosion.setFitHeight(60);
         explosion.setX(this.getTexture().getX());
         explosion.setY(this.getTexture().getY());
         explosion.setVisible(false);
-
     }
 
 
     @Override
-    void move() {
+    void move(double direction) {
+        double newTriangleHitboxTopPointY = this.getTriangleHitbox().getPoints().get(1) + speed*direction;
+        double newTriangleHitboxBottomPointY = this.getTriangleHitbox().getPoints().get(3) + speed*direction;
+        double newTriangleHitboxMiddleRightPointY = this.getTriangleHitbox().getPoints().get(5) + speed*direction;
+        this.getTriangleHitbox().getPoints().setAll(
+                getTriangleHitboxTopPointX(), newTriangleHitboxTopPointY,
+                getTriangleHitboxBottomPointX(), newTriangleHitboxBottomPointY,
+                getTriangleHitboxMiddleRightPointX(), newTriangleHitboxMiddleRightPointY
+        );
+        this.getTexture().setY(this.getTexture().getY() + speed*direction);
+
+    }
+
+    void moveExplosionTexture(){
         explosion.setX(this.getTexture().getX());
         explosion.setY(this.getTexture().getY());
     }
@@ -51,41 +62,22 @@ class SpaceShip extends SpaceObject implements Ship {
         explosion.setVisible(true);
     }
 
-    private void moveUp() {
-        double newTriangleHitboxTopPointY = this.getTriangleHitbox().getPoints().get(1) - speedDirectionUp;
-        double newTriangleHitboxBottomPointY = this.getTriangleHitbox().getPoints().get(3) - speedDirectionUp;
-        double newTriangleHitboxMiddleRightPointY = this.getTriangleHitbox().getPoints().get(5) - speedDirectionUp;
-        this.getTriangleHitbox().getPoints().setAll(
-                triangleHitboxTopPointX, newTriangleHitboxTopPointY,
-                triangleHitboxBottomPointX, newTriangleHitboxBottomPointY,
-                triangleHitboxMiddleRightPointX, newTriangleHitboxMiddleRightPointY
-        );
-        this.getTexture().setY(this.getTexture().getY() - speedDirectionUp);
-
-        if (this.getTriangleHitbox().getPoints().get(1) == 1) {
-            speedDirectionUp = 0;
-        } else returnToDefaultSpeed();
+    public void moveUp() {
+        if(this.getTriangleHitbox().getPoints().get(1) == 1){
+            speed = 0;
+        }else returnToDefaultSpeed();
+        move(-1);
     }
 
-    private void moveDown() {
-        double newTriangleHitboxTopPointY = this.getTriangleHitbox().getPoints().get(1) + speedDirectionDown;
-        double newTriangleHitboxBottomPointY = this.getTriangleHitbox().getPoints().get(3) + speedDirectionDown;
-        double newTriangleHitboxMiddleRightPointY = this.getTriangleHitbox().getPoints().get(5) + speedDirectionDown;
-        this.getTriangleHitbox().getPoints().setAll(
-                getTriangleHitboxTopPointX(), newTriangleHitboxTopPointY,
-                getTriangleHitboxBottomPointX(), newTriangleHitboxBottomPointY,
-                getTriangleHitboxMiddleRightPointX(), newTriangleHitboxMiddleRightPointY
-        );
-        this.getTexture().setY(this.getTexture().getY() + speedDirectionDown);
-
-        if (this.getTriangleHitbox().getPoints().get(3) == 720) {
-            speedDirectionDown = 0;
-        } else returnToDefaultSpeed();
+     public void moveDown() {
+         if (this.getTriangleHitbox().getPoints().get(3) == 720 ) {
+             speed = 0;
+         }else returnToDefaultSpeed();
+         move(1);
     }
 
     private void returnToDefaultSpeed() {
-        speedDirectionUp = DEFAULT_SPEED_CONSTANT;
-        speedDirectionDown = DEFAULT_SPEED_CONSTANT;
+        speed=DEFAULT_SPEED_CONSTANT;
     }
 
     Polygon getTriangleHitbox() {
@@ -96,7 +88,7 @@ class SpaceShip extends SpaceObject implements Ship {
         return new ShipControls();
     }
 
-    class ShipControls implements EventHandler<KeyEvent> {
+     class ShipControls implements EventHandler<KeyEvent> {
 
         @Override
         public void handle(KeyEvent keyEvent) {

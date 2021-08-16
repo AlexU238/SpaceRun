@@ -2,11 +2,11 @@ package sample.Game;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import sample.IMusicPlayer;
+import sample.MusicPlayer;
 
 import java.net.URISyntaxException;
 
-public final class GameMusic implements IMusicPlayer {
+public final class GameMusic implements MusicPlayer {
     private Media mediaGame;
     private Media crashSound;
     private MediaPlayer mediaPlayerGame;

@@ -4,9 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -29,13 +26,11 @@ final class SettingsPage {
     private double currentMenuVolumeLevel=100;
     private double currentGameVolumeLevel=100;
 
-    private SettingsPage() {
-        UITextureLoader.loadDefaultTexture();
-        UITextureLoader.loadSettingsPageTextures();
-        settingsTitle = new ImageView(UITextureLoader.getSettingsTitle());
-        returnToMenuButton = new ImageView(UITextureLoader.getBackButtonTexture());
+    SettingsPage() {
+        settingsTitle = new ImageView(UITextureLoader.loadSettingsPageSettingsTitleTexture());
+        returnToMenuButton = new ImageView(UITextureLoader.loadSettingsPageBackButtonTexture());
 
-        saveChanges = new ImageView(UITextureLoader.getChangeNameButton());
+        saveChanges = new ImageView(UITextureLoader.loadSettingsPageSaveChangesButton());
         newName = new TextField(Main.getPlayerName());
 
         settingsMenuLayout = new VBox();
@@ -43,9 +38,6 @@ final class SettingsPage {
         settingsMenu = new Scene(settingsMenuLayout, 1080, 720);
     }
 
-    static SettingsPage giveAccessToSettings() {
-        return new SettingsPage();
-    }
 
     private void setUpSettingsPage() {
         setUpVolumeSliders();
@@ -56,7 +48,7 @@ final class SettingsPage {
         settingsMenuLayout.setSpacing(10);
         settingsMenuLayout.setAlignment(Pos.CENTER);
         newName.setMaxWidth(200);
-        settingsMenuLayout.setBackground(new Background(new BackgroundImage(UITextureLoader.getBackground(), null, null, null, BackgroundSize.DEFAULT)));
+        settingsMenuLayout.setBackground(new MenuBackgroundFactory().createBackground());
     }
 
     void openSettings() {

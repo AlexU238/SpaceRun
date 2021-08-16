@@ -1,5 +1,8 @@
 package sample.Game;
 
 interface Ship {
-//indicator interface
+
+    void moveUp();
+
+    void moveDown();
 }

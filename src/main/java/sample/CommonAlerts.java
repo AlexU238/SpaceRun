@@ -2,10 +2,7 @@ package sample;
 
 import javafx.scene.control.Alert;
 
-public class CommonAlerts {
-
-    private CommonAlerts() {
-    }
+public abstract class CommonAlerts {
 
 
     public static void loadDefaultTextureAlert() {
@@ -31,6 +28,7 @@ public class CommonAlerts {
         loadGameAlert.setContentText("Some of the game textures are missing. This may affect several aspects of the game.");
         loadGameAlert.showAndWait();
     }
+
 
 
 }

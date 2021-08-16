@@ -14,18 +14,18 @@ class SpaceShipTest {
 
     @BeforeEach
     void setUp() {
-        testSpaceShip = new SpaceShip(0, 0, new ImageView(GameTextureLoader.getShip()));
+        testSpaceShip = new SpaceShip(0, 0, new ImageView(GameTextureLoader.loadGameShipTexture()));
     }
 
     @Test
     void move_ExplosionTextureX_test() {
-        testSpaceShip.move();
+        testSpaceShip.moveExplosionTexture();
         assertEquals(testSpaceShip.getTexture().getX(), testSpaceShip.getExplosion().getX());
     }
 
     @Test
     void move_ExplosionTextureY_test() {
-        testSpaceShip.move();
+        testSpaceShip.moveExplosionTexture();
         assertEquals(testSpaceShip.getTexture().getY(), testSpaceShip.getExplosion().getY());
     }
 
